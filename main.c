@@ -27,17 +27,21 @@ void heapifyUp(int arr[],int lastIndex){
 //silerken
 void heapifyDown(int * arr){
     int currNode = 1;
-
-    while(currNode<HeapSize && arr[currNode] < arr[currNode*2] || arr[currNode] < arr[currNode*2+1]){
-        int left = currNode*2;
-        int right = currNode*2+1;
-        if(arr[left] > arr[right]){
-            swap(&arr[currNode],&arr[left]);
-            currNode = left;
-        } else{
-            swap(&arr[currNode],&arr[right]);
-            currNode = right;
+    int maxValueIndex = currNode;
+    while(1){
+        int left = currNode * 2;
+        int right = currNode * 2 + 1;
+        if(left <= HeapSize && arr[left] > arr[maxValueIndex]){
+            maxValueIndex = left;
         }
+        if(right <= HeapSize && arr[right] > arr[maxValueIndex]){
+            maxValueIndex = right;
+        }
+        if(maxValueIndex == currNode){
+            break;
+        }
+        swap(&arr[currNode],&arr[maxValueIndex]);
+        currNode = maxValueIndex;
     }
 }
 
@@ -74,8 +78,8 @@ int findKthLargest(int* nums, int numsSize, int k) {
 
 
 int main() {
-    int arr[] = {15,20,2,3,5,7,8,85,35,78,65,11,79,85,85,85,13,45};
-    int deneme = findKthLargest(arr,18,7);
+    int arr[] = {4,5,1,3,2,8,9,10};
+    int deneme = findKthLargest(arr,8,5);
 
     return deneme;
 }
